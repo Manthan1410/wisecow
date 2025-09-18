@@ -20,8 +20,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t manthankullam/wisecow-app:latest .
+        run: docker build -t manthankullam/wisecow:latest .
 
       - name: Push Docker image
-        run: docker push manthankullam/wisecow-app:latest
+        run: docker push manthankullam/wisecow:latest
 
