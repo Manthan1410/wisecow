@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,19 +23,21 @@ jobs:
 
       - name: Push Docker image
         run: docker push manthankullam/wisecow:latest
- 
-deploy:
-    needs: build-and-push
+
+  deploy:
+    needs: build-and-push 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up kubectl
         run: |
+          mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > $HOME/.kube/config
 
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f wisecow-deployment.yaml
           kubectl apply -f wisecow-service.yaml
+ 
